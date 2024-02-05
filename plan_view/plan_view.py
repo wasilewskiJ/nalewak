@@ -28,7 +28,8 @@ def adjust_point(pt, max_width, max_height, threshold=55):
 
     return (x, y)
 
-def plan_view(image_path = '../ready_img.png', additional_points_path = '../network/centers.pkl', cords = [(308,38), (580,220), (326,492), (56,221)]):
+#cords kolejnosc : lewo gora, prawo gora, prawo dol, lewo dol
+def plan_view(image_path = './ready_img.png', additional_points_path = './centers.pkl',  cords = [(35, 178), (274,31), (533, 184), (291, 470)]):
     image = cv2.imread(image_path)
     pts = np.array(cords, dtype = "float32")
 
@@ -46,9 +47,7 @@ def plan_view(image_path = '../ready_img.png', additional_points_path = '../netw
     for pt in transformed_points:
         adjusted_pt = adjust_point(pt, warped.shape[1], warped.shape[0])
         cv2.circle(warped, adjusted_pt, 5, (0, 255, 0), -1)
-
+        print(f'Srodek kubka po transformacji w: {pt}')
     # Save the warped image
     cv2.imwrite("projected.png", warped)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
 

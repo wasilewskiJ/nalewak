@@ -4,7 +4,7 @@ def crop_photo(image_path = './corrected_img.png', output_path = './ready_img.pn
     # Paths for input and output images
     
     # Pixels to crop: [top, bottom, left, right]
-    crop_pixels = [466, 70, 681, 618]  # Example values
+    crop_pixels = [360, 200, 730, 620]  # Example values
 
     # Load the image
     img = cv2.imread(image_path)
