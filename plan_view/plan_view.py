@@ -29,7 +29,7 @@ def adjust_point(pt, max_width, max_height, threshold=55):
     return (x, y)
 
 #cords kolejnosc : lewo gora, prawo gora, prawo dol, lewo dol
-def plan_view(image_path = './ready_img.png', additional_points_path = './centers.pkl',  cords = [(35, 178), (274,31), (533, 184), (291, 470)]):
+def plan_view(image_path = './ready_img.png', additional_points_path = './centers.pkl',  cords = [(55, 206), (295,61), (555, 225), (310, 499)]):
     image = cv2.imread(image_path)
     pts = np.array(cords, dtype = "float32")
 
