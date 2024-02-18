@@ -147,7 +147,7 @@ def detect_objects():
                 ymax = int(min(imH,(boxes[i][2] * imH)))
                 xmax = int(min(imW,(boxes[i][3] * imW)))
 
-                cv2.rectangle(image, (xmin,ymin), (xmax,ymax), (10, 255, 0), 2)
+                cv2.rectangle(image_rgb, (xmin,ymin), (xmax,ymax), (10, 255, 0), 2)
                 center_x = (xmin + xmax) // 2
                 center_y = (ymin + ymax) // 2
                 print(f'Found center of mug at: ({center_x} , {center_y} )')
@@ -157,14 +157,14 @@ def detect_objects():
                 label = '%s: %d%%' % (object_name, int(scores[i]*100)) # Example: 'person: 72%'
                 labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2) # Get font size
                 label_ymin = max(ymin, labelSize[1] + 10) # Make sure not to draw label too close to top of window
-                cv2.rectangle(image, (xmin, label_ymin-labelSize[1]-10), (xmin+labelSize[0], label_ymin+baseLine-10), (255, 255, 255), cv2.FILLED) # Draw white box to put label text in
-                cv2.putText(image, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2) # Draw label text
+                cv2.rectangle(image_rgb, (xmin, label_ymin-labelSize[1]-10), (xmin+labelSize[0], label_ymin+baseLine-10), (255, 255, 255), cv2.FILLED) # Draw white box to put label text in
+                cv2.putText(image_rgb, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2) # Draw label text
 
                 detections.append([object_name, scores[i], xmin, ymin, xmax, ymax])
 
         # All the results have been drawn on the image, now display the image
         if show_results:
-            cv2.imshow('Object detector', image)
+            cv2.imshow('Object detector', image_rgb)
 
             # Press any key to continue to next image, or press 'q' to quit
             if cv2.waitKey(0) == ord('q'):
@@ -182,7 +182,7 @@ def detect_objects():
             txt_savepath = os.path.join(CWD_PATH,RESULTS_DIR,txt_result_fn)
 
             # Save image
-            cv2.imwrite(image_savepath, image)
+            cv2.imwrite(image_savepath, image_rgb)
 
             # Write results to text file
             # (Using format defined by https://github.com/Cartucho/mAP, which will make it easy to calculate mAP)
