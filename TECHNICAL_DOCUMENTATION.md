@@ -66,20 +66,20 @@ ARM_180 - Rotates the robot's arm to 180 degrees.
 
 ### SCRIPTS AND THEIR FUNCTIONALITY ###
 
-*** vision_system/main.py *** - starts vision system job. Runs all subscripts
+***vision_system/main.py*** - starts vision system job. Runs all subscripts
 
-*** ./take_photo.py *** - takes photo in 1920x1080 resolution. Saves as _img.png_
+***./take_photo.py*** - takes photo in 1920x1080 resolution. Saves as _img.png_
 
-*** correct/correct.py *** - uses _dist_pickle.p_ to defish a fisheye effect. Saves results as *corrected_img.png* 
+***correct/correct.py*** - uses _dist_pickle.p_ to defish a fisheye effect. Saves results as *corrected_img.png* 
 
-*** correct/crop.py *** - crops *corrected_img.png* to desired size and saves as *ready_img.png*
+***correct/crop.py*** - crops *corrected_img.png* to desired size and saves as *ready_img.png*
 
-*** network/model *** - directory that contains trained tensorflow model
+***network/model*** - directory that contains trained tensorflow model
 
-*** network/detect_mug.py *** - detects mugs in *ready_img.png*. Finds centers of detected mugs and saves coordinates to *./list.p*
+***network/detect_mug.py*** - detects mugs in *ready_img.png*. Finds centers of detected mugs and saves coordinates to *./list.p*
 
-*** plan_view/transform.py *** - contains helper functions for projection.py
+***plan_view/transform.py*** - contains helper functions for projection.py
 
-*** plan_view/projection.py *** - does plan view transformation and calculates centers of mugs. Corrects calculations using *correction_formulas.txt* and saves coordinates of mugs centers to *centers.txt*
+***plan_view/projection.py*** - does plan view transformation and calculates centers of mugs. Corrects calculations using *correction_formulas.txt* and saves coordinates of mugs centers to *centers.txt*
 
-*** ./send_commands.py *** - sends commands to Klipper via API Server using moonraker. Uses *plan_view/centers.txt*
+***./send_commands.py*** - sends commands to Klipper via API Server using moonraker. Uses *plan_view/centers.txt*
