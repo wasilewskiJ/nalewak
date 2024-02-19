@@ -50,4 +50,3 @@ def four_point_transform(image, pts):
 
     # return the warped image and the transform matrix
 	return warped, M
-

@@ -50,4 +50,3 @@ def plan_view(image_path = './ready_img.png', additional_points_path = './center
         print(f'Srodek kubka po transformacji w: {pt}')
     # Save the warped image
     cv2.imwrite("projected.png", warped)
-
