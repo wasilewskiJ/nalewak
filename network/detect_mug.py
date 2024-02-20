@@ -21,6 +21,7 @@ import glob
 import importlib.util
 import pickle
 
+
 def detect_objects():
     # Stałe wartości dla ścieżek do modelu i obrazu
     MODEL_NAME = './network/model'
@@ -56,7 +57,8 @@ def detect_objects():
     # Definiowanie ścieżki do obrazów i pobieranie nazw plików obrazów
     if IM_DIR:
         PATH_TO_IMAGES = os.path.join(CWD_PATH, IM_DIR)
-        images = glob.glob(PATH_TO_IMAGES + '/*.jpg') + glob.glob(PATH_TO_IMAGES + '/*.png') + glob.glob(PATH_TO_IMAGES + '/*.bmp')
+        images = glob.glob(PATH_TO_IMAGES + '/*.jpg') + glob.glob(
+            PATH_TO_IMAGES + '/*.png') + glob.glob(PATH_TO_IMAGES + '/*.bmp')
         if save_results:
             RESULTS_DIR = IM_DIR + '_results'
     else:
@@ -83,12 +85,12 @@ def detect_objects():
 
     # Usuwanie pierwszej etykiety '???', jeśli jest obecna
     if labels[0] == '???':
-        del(labels[0])
+        del (labels[0])
 
     # Wczytywanie modelu TensorFlow Lite i alokowanie tensorów
-    interpreter = Interpreter(model_path=PATH_TO_CKPT) if not use_TPU else Interpreter(model_path=PATH_TO_CKPT, experimental_delegates=[load_delegate('libedgetpu.so.1.0')])
+    interpreter = Interpreter(model_path=PATH_TO_CKPT) if not use_TPU else Interpreter(
+        model_path=PATH_TO_CKPT, experimental_delegates=[load_delegate('libedgetpu.so.1.0')])
     interpreter.allocate_tensors()
-
 
     # Get model details
     input_details = interpreter.get_input_details()
@@ -105,9 +107,9 @@ def detect_objects():
     # because outputs are ordered differently for TF2 and TF1 models
     outname = output_details[0]['name']
 
-    if ('StatefulPartitionedCall' in outname): # This is a TF2 model
+    if ('StatefulPartitionedCall' in outname):  # This is a TF2 model
         boxes_idx, classes_idx, scores_idx = 1, 3, 0
-    else: # This is a TF1 model
+    else:  # This is a TF1 model
         boxes_idx, classes_idx, scores_idx = 0, 1, 2
 
     # Loop over every image and perform detection
@@ -125,13 +127,16 @@ def detect_objects():
             input_data = (np.float32(input_data) - input_mean) / input_std
 
         # Perform the actual detection by running the model with the image as input
-        interpreter.set_tensor(input_details[0]['index'],input_data)
+        interpreter.set_tensor(input_details[0]['index'], input_data)
         interpreter.invoke()
 
         # Retrieve detection results
-        boxes = interpreter.get_tensor(output_details[boxes_idx]['index'])[0] # Bounding box coordinates of detected objects
-        classes = interpreter.get_tensor(output_details[classes_idx]['index'])[0] # Class index of detected objects
-        scores = interpreter.get_tensor(output_details[scores_idx]['index'])[0] # Confidence of detected objects
+        boxes = interpreter.get_tensor(output_details[boxes_idx]['index'])[
+            0]  # Bounding box coordinates of detected objects
+        classes = interpreter.get_tensor(output_details[classes_idx]['index'])[
+            0]  # Class index of detected objects
+        scores = interpreter.get_tensor(output_details[scores_idx]['index'])[
+            0]  # Confidence of detected objects
 
         detections = []
 
@@ -142,25 +147,34 @@ def detect_objects():
 
                 # Get bounding box coordinates and draw box
                 # Interpreter can return coordinates that are outside of image dimensions, need to force them to be within image using max() and min()
-                ymin = int(max(1,(boxes[i][0] * imH)))
-                xmin = int(max(1,(boxes[i][1] * imW)))
-                ymax = int(min(imH,(boxes[i][2] * imH)))
-                xmax = int(min(imW,(boxes[i][3] * imW)))
+                ymin = int(max(1, (boxes[i][0] * imH)))
+                xmin = int(max(1, (boxes[i][1] * imW)))
+                ymax = int(min(imH, (boxes[i][2] * imH)))
+                xmax = int(min(imW, (boxes[i][3] * imW)))
 
-                cv2.rectangle(image_rgb, (xmin,ymin), (xmax,ymax), (10, 255, 0), 2)
+                cv2.rectangle(image_rgb, (xmin, ymin),
+                              (xmax, ymax), (10, 255, 0), 2)
                 center_x = (xmin + xmax) // 2
                 center_y = (ymin + ymax) // 2
                 print(f'Found center of mug at: ({center_x} , {center_y} )')
                 centers.append((center_x, center_y))
                 # Draw label
-                object_name = labels[int(classes[i])] # Look up object name from "labels" array using class index
-                label = '%s: %d%%' % (object_name, int(scores[i]*100)) # Example: 'person: 72%'
-                labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2) # Get font size
-                label_ymin = max(ymin, labelSize[1] + 10) # Make sure not to draw label too close to top of window
-                cv2.rectangle(image_rgb, (xmin, label_ymin-labelSize[1]-10), (xmin+labelSize[0], label_ymin+baseLine-10), (255, 255, 255), cv2.FILLED) # Draw white box to put label text in
-                cv2.putText(image_rgb, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2) # Draw label text
+                # Look up object name from "labels" array using class index
+                object_name = labels[int(classes[i])]
+                label = '%s: %d%%' % (object_name, int(
+                    scores[i]*100))  # Example: 'person: 72%'
+                labelSize, baseLine = cv2.getTextSize(
+                    label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)  # Get font size
+                # Make sure not to draw label too close to top of window
+                label_ymin = max(ymin, labelSize[1] + 10)
+                # Draw white box to put label text in
+                cv2.rectangle(image_rgb, (xmin, label_ymin-labelSize[1]-10), (
+                    xmin+labelSize[0], label_ymin+baseLine-10), (255, 255, 255), cv2.FILLED)
+                cv2.putText(image_rgb, label, (xmin, label_ymin-7),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)  # Draw label text
 
-                detections.append([object_name, scores[i], xmin, ymin, xmax, ymax])
+                detections.append(
+                    [object_name, scores[i], xmin, ymin, xmax, ymax])
 
         # All the results have been drawn on the image, now display the image
         if show_results:
@@ -175,20 +189,21 @@ def detect_objects():
 
             # Get filenames and paths
             image_fn = os.path.basename(image_path)
-            image_savepath = os.path.join(CWD_PATH,RESULTS_DIR,image_fn)
+            image_savepath = os.path.join(CWD_PATH, RESULTS_DIR, image_fn)
 
             base_fn, ext = os.path.splitext(image_fn)
-            txt_result_fn = base_fn +'.txt'
-            txt_savepath = os.path.join(CWD_PATH,RESULTS_DIR,txt_result_fn)
+            txt_result_fn = base_fn + '.txt'
+            txt_savepath = os.path.join(CWD_PATH, RESULTS_DIR, txt_result_fn)
 
             # Save image
             cv2.imwrite(image_savepath, image_rgb)
 
             # Write results to text file
             # (Using format defined by https://github.com/Cartucho/mAP, which will make it easy to calculate mAP)
-            with open(txt_savepath,'w') as f:
+            with open(txt_savepath, 'w') as f:
                 for detection in detections:
-                    f.write('%s %.4f %d %d %d %d\n' % (detection[0], detection[1], detection[2], detection[3], detection[4], detection[5]))
+                    f.write('%s %.4f %d %d %d %d\n' % (
+                        detection[0], detection[1], detection[2], detection[3], detection[4], detection[5]))
     with open('centers.pkl', 'wb') as file:
         pickle.dump(centers, file)
     # Clean up
