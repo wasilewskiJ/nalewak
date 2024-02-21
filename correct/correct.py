@@ -2,7 +2,7 @@ import cv2
 import pickle
 
 
-def correct_photo(image_path='./img.png', calibration_file='./correct/dist_pickle.p', output_path='./corrected_img.png'):
+def correct_photo(image_path='../img.png', calibration_file='./dist_pickle.p', output_path='./corrected_img.png'):
     """
     Correct the distortion in an image using calibration parameters.
 

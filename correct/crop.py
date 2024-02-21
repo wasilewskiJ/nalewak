@@ -1,7 +1,7 @@
 import cv2
 
 
-def crop_photo(image_path='./corrected_img.png', output_path='./ready_img.png'):
+def crop_photo(image_path='./corrected_img.png', output_path='../ready_img.png'):
     # Paths for input and output images
 
     # Pixels to crop: [top, bottom, left, right]

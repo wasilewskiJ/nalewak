@@ -24,7 +24,7 @@ import pickle
 
 def detect_objects():
     # Stałe wartości dla ścieżek do modelu i obrazu
-    MODEL_NAME = './network/model'
+    MODEL_NAME = 'model'
     GRAPH_NAME = 'detect.tflite'
     LABELMAP_NAME = 'labelmap.txt'
     min_conf_threshold = 0.5
@@ -33,7 +33,7 @@ def detect_objects():
     save_results = True  # Zaktualizuj tę wartość zgodnie z potrzebami
     show_results = False  # Zaktualizuj tę wartość zgodnie z potrzebami
 
-    IM_NAME = './ready_img.png'  # Nazwa obrazu do analizy
+    IM_NAME = '../ready_img.png'  # Nazwa obrazu do analizy
     IM_DIR = None  # Zaktualizuj tę wartość, jeśli chcesz przetwarzać folder
 
     # Import TensorFlow libraries
@@ -51,8 +51,8 @@ def detect_objects():
     if use_TPU:
         GRAPH_NAME = 'edgetpu.tflite'
 
-    # Ścieżka do bieżącego katalogu roboczego
-    CWD_PATH = os.getcwd()
+    # Ścieżka dokatalogu skryptu
+    CWD_PATH = os.path.dirname(__file__)
 
     # Definiowanie ścieżki do obrazów i pobieranie nazw plików obrazów
     if IM_DIR:
@@ -65,7 +65,7 @@ def detect_objects():
         PATH_TO_IMAGES = os.path.join(CWD_PATH, IM_NAME)
         images = glob.glob(PATH_TO_IMAGES)
         if save_results:
-            RESULTS_DIR = './network/results'
+            RESULTS_DIR = './results'
 
     # Tworzenie katalogu wyników, jeśli użytkownik chce zapisać wyniki
     if save_results:
@@ -78,7 +78,6 @@ def detect_objects():
 
     # Ścieżka do pliku z mapą etykiet
     PATH_TO_LABELS = os.path.join(CWD_PATH, MODEL_NAME, LABELMAP_NAME)
-
     # Wczytywanie mapy etykiet
     with open(PATH_TO_LABELS, 'r') as f:
         labels = [line.strip() for line in f.readlines()]

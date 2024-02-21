@@ -1,8 +1,12 @@
-from transform import four_point_transform
+from .transform import four_point_transform
 import numpy as np
 import cv2
 import pickle
+import os
 
+
+X_FACTOR = 1.35915493 
+Y_FACTOR = 1.346534653
 
 def transform_points(pts, M):
     """Transform points using the transformation matrix M."""
@@ -31,13 +35,24 @@ def adjust_point(pt, max_width, max_height, threshold=55):
     return (x, y)
 
 
-def plan_view(image_path='./ready_img.png', additional_points_path='./centers.pkl'):
+def plan_view(image_path='../ready_img.png', centers_path='./centers.pkl'):
 	image = cv2.imread(image_path)
-	with open('./plan_view/vertices.txt') as f:
+	with open('./vertices.txt') as f:
 		pts = eval(f.readline())
 	pts = np.array(pts, dtype="float32")
 
     # Apply the four point transform to obtain a "birds eye view" of the image
 	warped, M = four_point_transform(image, pts)
-	cv2.imwrite('rzucik.png', warped)
-
+	cv2.imwrite('../rzucik.png', warped)
+	
+	#calculate centers of mugs after transformation
+	with open(centers_path, 'rb') as f:
+		centers = pickle.load(f)
+	transformed_pts = transform_points(centers, M)
+	
+	#we need to reverse axis and calculate real-coordinates
+	print(transformed_pts)
+	physical_pts = []
+	for pt in transformed_pts:
+		physical_pts.append((pt[1] * X_FACTOR, pt[0] * Y_FACTOR))
+	print(f'srodki: {physical_pts}')

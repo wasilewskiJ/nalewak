@@ -27,6 +27,6 @@ def order_points(pts):
     return
 
 
-CORDS = [(55, 206), (295, 61), (555, 225), (310, 499)]
+CORDS = [(309 , 503), (577 , 200), (32 , 179), (292,26)] 
 pts = np.array(CORDS, dtype="float32")
 order_points(pts)
