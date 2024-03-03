@@ -5,7 +5,7 @@ import pickle
 import os
 
 
-X_FACTOR = 1.35915493 
+X_FACTOR = 1.35915493
 Y_FACTOR = 1.346534653
 
 def transform_points(pts, M):
@@ -35,24 +35,28 @@ def adjust_point(pt, max_width, max_height, threshold=55):
     return (x, y)
 
 
-def plan_view(image_path='../ready_img.png', centers_path='./centers.pkl'):
-	image = cv2.imread(image_path)
-	with open('./vertices.txt') as f:
-		pts = eval(f.readline())
-	pts = np.array(pts, dtype="float32")
+def plan_view(image, DIR_PATH='./vision_system/plan_view/', CENTERS_NAME='centers.pkl', VERTICES_NAME='vertices.txt', OUTPUT=False, OUTPUT_NAME='plan_view.png'):
+    CENTERS_PATH = os.path.join(DIR_PATH, CENTERS_NAME)
+    VERTICES_PATH = os.path.join(DIR_PATH, VERTICES_NAME)
+    OUTPUT_PATH = os.path.join(DIR_PATH, OUTPUT_NAME)
+
+    with open(VERTICES_PATH) as f:
+        pts = eval(f.readline())
+    pts = np.array(pts, dtype="float32")
 
     # Apply the four point transform to obtain a "birds eye view" of the image
-	warped, M = four_point_transform(image, pts)
-	cv2.imwrite('../rzucik.png', warped)
-	
-	#calculate centers of mugs after transformation
-	with open(centers_path, 'rb') as f:
-		centers = pickle.load(f)
-	transformed_pts = transform_points(centers, M)
-	
-	#we need to reverse axis and calculate real-coordinates
-	print(transformed_pts)
-	physical_pts = []
-	for pt in transformed_pts:
-		physical_pts.append((pt[1] * X_FACTOR, pt[0] * Y_FACTOR))
-	print(f'srodki: {physical_pts}')
+    warped, M = four_point_transform(image, pts)
+    if OUTPUT:
+        cv2.imwrite(OUTPUT_PATH, warped)
+
+    #calculate centers of mugs after transformation
+    with open(CENTERS_PATH, 'rb') as f:
+        centers = pickle.load(f)
+    transformed_pts = transform_points(centers, M)
+
+    #we need to reverse axis and calculate real-coordinates
+    physical_pts = []
+    for pt in transformed_pts:
+        transformed_pt = (pt[1] * X_FACTOR, pt[0] * Y_FACTOR)
+        physical_pts.append((transformed_pt))
+    print(f'SRODKI KUBKOW           : {physical_pts}')
