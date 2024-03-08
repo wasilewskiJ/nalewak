@@ -16,7 +16,8 @@ def vision_system():
     img  = correct_photo(img)
     img = crop_photo(img)
     detect_objects(img)
-    plan_view(img)
+    centers = plan_view(img)
+    return centers
 
 
 if __name__ == "__main__":

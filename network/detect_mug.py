@@ -7,7 +7,7 @@ import importlib.util
 import pickle
 
 
-def detect_objects(image, DIR_PATH='./vision_system/network/', MODEL_NAME='model', GRAPH_NAME='detect.tflite', LABELMAP_NAME='labelmap.txt', OUTPUT=False, OUTPUT_DIR='results', OUTPUT_NAME='img_network_result.png', CENTERS_OUTPUT_PATH='./vision_system/plan_view/centers.pkl'):
+def detect_objects(image, DIR_PATH='./vision_system/network/', MODEL_NAME='model', GRAPH_NAME='detect.tflite', LABELMAP_NAME='labelmap.txt', OUTPUT=True, OUTPUT_DIR='results', OUTPUT_NAME='img_network_result.png', CENTERS_OUTPUT_PATH='./vision_system/plan_view/centers.pkl', VERTICES_NAME='../plan_view/vertices.txt'):
     min_conf_threshold = 0.5
     show_results = False  # Zaktualizuj tę wartość zgodnie z potrzebami
 
@@ -86,6 +86,13 @@ def detect_objects(image, DIR_PATH='./vision_system/network/', MODEL_NAME='model
 
     detections = []
 
+
+    VERTICES_PATH = os.path.join(DIR_PATH, VERTICES_NAME)
+
+    with open(VERTICES_PATH) as f:
+        pts = eval(f.readline())
+    pts = np.array(pts, dtype="float32")
+
     # Loop over all detections and draw detection box if confidence is above minimum threshold
     centers = []
     for i in range(len(scores)):
@@ -100,10 +107,25 @@ def detect_objects(image, DIR_PATH='./vision_system/network/', MODEL_NAME='model
 
             cv2.rectangle(image_rgb, (xmin, ymin),
                             (xmax, ymax), (10, 255, 0), 2)
+            
+            # Searching for mug/cup center based on location in photo
             center_x = (xmin + xmax) // 2
             center_y = (ymin + ymax) // 2
-            print(f'Found center of mug at: ({center_x} , {center_y} )')
-            centers.append((center_x, center_y))
+            height = ymax - ymin
+            width = xmax - xmin
+            cup_center_y = int(center_y + height / 3.1 * (imH - center_y + 100) / imH)
+            cup_center_x = int(center_x + width / 2 * (imW/2 - center_x) / imW)
+
+            # Check if the center of the mug is inside the area of interest
+            if cv2.pointPolygonTest(pts, (cup_center_x, cup_center_y), False) < 0:
+                print(f'Center of mug at: ({cup_center_x} , {cup_center_y} ) is outside the area of interest')
+                continue
+
+            # Draw circle in the center of mug
+            cv2.circle(image_rgb, (cup_center_x, cup_center_y), 3, (0, 0, 255), -1)
+
+            print(f'Found center of mug at: ({cup_center_x} , {cup_center_y} )')
+            centers.append((cup_center_x, cup_center_y))
             # Draw label
             # Look up object name from "labels" array using class index
             object_name = labels[int(classes[i])]
