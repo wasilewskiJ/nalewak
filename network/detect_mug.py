@@ -7,17 +7,18 @@ import importlib.util
 import pickle
 
 
+
+# Import TensorFlow libraries
+pkg = importlib.util.find_spec('tflite_runtime')
+if pkg:
+    from tflite_runtime.interpreter import Interpreter
+else:
+    from tensorflow.lite.python.interpreter import Interpreter
+
 def detect_objects(image, DIR_PATH='./vision_system/network/', MODEL_NAME='model', GRAPH_NAME='detect.tflite', LABELMAP_NAME='labelmap.txt', OUTPUT=True, OUTPUT_DIR='results', OUTPUT_NAME='img_network_result.png', CENTERS_OUTPUT_PATH='./vision_system/plan_view/centers.pkl', VERTICES_NAME='../plan_view/vertices.txt'):
     min_conf_threshold = 0.5
     show_results = False  # Zaktualizuj tę wartość zgodnie z potrzebami
 
-
-    # Import TensorFlow libraries
-    pkg = importlib.util.find_spec('tflite_runtime')
-    if pkg:
-        from tflite_runtime.interpreter import Interpreter
-    else:
-        from tensorflow.lite.python.interpreter import Interpreter
 
 
     # Tworzenie katalogu wyników, jeśli użytkownik chce zapisać wyniki
