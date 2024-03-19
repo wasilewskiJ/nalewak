@@ -47,15 +47,9 @@ if __name__ == "__main__":
     GPIO.setmode(GPIO.BCM) # Use physical pin numbering
     GPIO.setup(4, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Set pin 10 to be an input pin and set initial value to be pulled hight (on)
 
-    # GPIO.add_event_detect(4,GPIO.RISING,callback=button_callback) # Setup event on pin 10 rising edge
-
-    # message = input("Listning for button press. Press enter to quit\n\n") # Run until someone presses enter
-
     buzzer_on(0.2)
     sleep(0.2)
     buzzer_on(0.2)
-
-    # move_pour.max()
 
     print("Listning for button press. Ctrl+C to quit\n\n")
     while True:
