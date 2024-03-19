@@ -1,9 +1,3 @@
-#import sys
-#sys.path.append('/home/nalewak/vision_system/plan_view')
-#sys.path.append('/home/nalewak/vision_system/network')
-#sys.path.append('/home/nalewak/vision_system/correct')
-
-
 from .plan_view.plan_view import plan_view
 from .network.detect_mug import detect_objects
 from .correct.crop import crop_photo
