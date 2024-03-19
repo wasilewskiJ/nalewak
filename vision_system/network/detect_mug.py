@@ -17,30 +17,24 @@ else:
 
 def detect_objects(image, DIR_PATH='./vision_system/network/', MODEL_NAME='model', GRAPH_NAME='detect.tflite', LABELMAP_NAME='labelmap.txt', OUTPUT=True, OUTPUT_DIR='results', OUTPUT_NAME='img_network_result.png', CENTERS_OUTPUT_PATH='./vision_system/plan_view/centers.pkl', VERTICES_NAME='../plan_view/vertices.txt'):
     min_conf_threshold = 0.5
-    show_results = False  # Zaktualizuj tę wartość zgodnie z potrzebami
+    show_results = False  # Change to true if want to show detection results
 
-
-
-    # Tworzenie katalogu wyników, jeśli użytkownik chce zapisać wyniki
     if OUTPUT:
         OUTPUT_PATH = os.path.join(DIR_PATH, OUTPUT_DIR)
         if not os.path.exists(OUTPUT_PATH):
             os.makedirs(OUTPUT_PATH)
 
-    # Ścieżka do pliku .tflite, który zawiera model używany do wykrywania obiektów
     PATH_TO_CKPT = os.path.join(DIR_PATH, MODEL_NAME, GRAPH_NAME)
 
-    # Ścieżka do pliku z mapą etykiet
     PATH_TO_LABELS = os.path.join(DIR_PATH, MODEL_NAME, LABELMAP_NAME)
-    # Wczytywanie mapy etykiet
     with open(PATH_TO_LABELS, 'r') as f:
         labels = [line.strip() for line in f.readlines()]
 
-    # Usuwanie pierwszej etykiety '???', jeśli jest obecna
+    # deleting first '???' label if present. (it's a mistake in the labelmap.txt file)
     if labels[0] == '???':
         del (labels[0])
 
-    # Wczytywanie modelu TensorFlow Lite i alokowanie tensorów
+    # loading tensorflowlite and alocate tensors
     interpreter = Interpreter(model_path=PATH_TO_CKPT)
     interpreter.allocate_tensors()
 
