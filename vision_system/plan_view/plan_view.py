@@ -62,7 +62,7 @@ def plan_view(image, DIR_PATH='./vision_system/plan_view/', CENTERS_NAME='center
         centers = pickle.load(f)
     transformed_pts = transform_points(centers, M)
 
-    #we need to reverse axis and calculate real-coordinates
+    #we need to reverse axis and calculate robot-coordinates
     physical_pts = []
     for pt in transformed_pts:
         transformed_pt = (pt[1] * Y_TO_ROBOT_X_FACTOR, pt[0] * X_TO_ROBOT_Y_FACTOR)
@@ -75,5 +75,5 @@ def plan_view(image, DIR_PATH='./vision_system/plan_view/', CENTERS_NAME='center
             continue
 
         physical_pts.append((transformed_pt))
-    print(f'SRODKI KUBKOW           : {physical_pts}')
+    print(f'CUP CENTERS           : {physical_pts}')
     return physical_pts
