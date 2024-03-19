@@ -34,7 +34,7 @@ If you would like to manually start the robot every time you place the cups, run
 python move_pour.py
 ```
 
-Robot must home it's axes every first start. When the robot is idle, it stays in it's max position (579, 544) mm - top right corner. If there will be Arduino shutdown - robot will run FIRMWARE_RESTART command in Klipper, then will home and then continue last interrupted process.
+Robot must home it's axes every first start. When the robot is idle, it stays in it's max position (579, 544)[mm] - top right corner. If an Arduino shutdown happens - robot will run FIRMWARE_RESTART command in Klipper, then will home and then continue last interrupted process.
 
 
   
