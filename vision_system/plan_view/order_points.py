@@ -1,3 +1,4 @@
+#This script isn't used by default in project. You can use it to order vertices of rectangle.
 import numpy as np
 
 
