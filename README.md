@@ -3,6 +3,8 @@
 
 ## About the project ##
 The project of an autonomous beverage dispenser with a vision system based on Raspberry Pi is a robot that allows for automatic pouring of a specific amount of liquid (e.g. water, juice, etc.) into cups/glasses. It uses Arduino with stepper motors and Klipper3D to control the robot axes. Vision system is based on wide-angle camera with Raspberry Pi. The only other sensors used in the project apart from the camera are the end-switches used in the control system.
+
+**Click below to see our robot in action:** <br/><br/>
 [![Autonomous Beverage Dispenser](http://img.youtube.com/vi/lKksrWtldNg/0.jpg)](http://www.youtube.com/watch?v=lKksrWtldNg)
 
 
@@ -64,6 +66,5 @@ In the current configuration, robot takes image, scans for cups, locate their co
 - **system/** - directory containing system configurations
   - `printer.cfg` - Klipper configuration
   - `gpio_button.service` - service that you can start via systemctl command. It listens to the button push in background and runs the robot if pushed. 
-
 
   
