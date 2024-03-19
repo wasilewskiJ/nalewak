@@ -2,11 +2,11 @@
 # Autonomous Beverage Dispenser #
 
 ## About the project ##
-The project of an autonomous beverage dispenser with a vision system based on Raspberry Pi is a robot that allows for automatic pouring of a specific amount of liquid (e.g. water, juice, etc.) into cups/glasses. It uses Arduino with stepper motors and Klipper3D to control the robot axes. Vision system is based on wide-angle camera with Raspberry Pi. The only other sensors used in the project apart from the camera are the end-switches used in the control system.
+The project of an autonomous beverage dispenser with a vision system based on Raspberry Pi is a robot that allows for automatic pouring of a specific amount of liquid (e.g. water, juice, etc.) into cups/glasses. It uses Arduino with stepper motors and Klipper3D to control the robot axes. Vision system is based on wide-angle camera with Raspberry Pi. The only other sensors used in the project apart from the camera are the endstops used in the control system.
 
-**Click below to see our robot in action:** <br/><br/>
-[![Autonomous Beverage Dispenser](http://img.youtube.com/vi/lKksrWtldNg/0.jpg)](http://www.youtube.com/watch?v=lKksrWtldNg)
+![Autonomous beverage dispenser](https://lh3.googleusercontent.com/u/1/drive-viewer/AKGpihY4Ds88guXWTf6SJowu3OumF_aubBPPEXEGs7TINiyMgXItxIrY_UPugz1Nocb0jx5w-EFktZdDalxKAt3sy4ylCh8eCg=w1850-h968)
 
+<link to project page/>
 
 ## Requirements ##
 - Our robot - "nalewak" :)<br>
@@ -65,6 +65,16 @@ In the current configuration, robot takes image, scans for cups, locate their co
 - `gpio_button.py` - listens for button push, and if pushed, starts a thread running `move_pour.py` module
 - **system/** - directory containing system configurations
   - `printer.cfg` - Klipper configuration
-  - `gpio_button.service` - service that you can start via systemctl command. It listens to the button push in background and runs the robot if pushed. 
+  - `gpio_button.service` - service that you can start via systemctl command. It listens to the button push in background and runs the robot if pushed.
 
-  
+## Hardware ##
+- Raspberry Pi 4B
+- Wide-angle camera for Raspberry Pi, OV5647 5Mpx Waveshare
+- 3x stepper motor NEMA17 17HS4401
+- 3x motor driver TB6600
+- 3x endstop switch
+- Diaphragm pump 6-12V DC R385, WATER-AIR
+- 5V 10A relay
+## Software ##
+- Klipper3D
+- TensorFlow SSD-Mobilenet-V2-FPNlite-320 model 
