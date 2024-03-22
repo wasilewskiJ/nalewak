@@ -72,7 +72,7 @@ In the current configuration, robot takes image, scans for cups, locate their co
 
 **If anything goes wrong, there is an emergency button on the top edge of box with power supply** - it will turn off the motors and the pump. Currently, there is a separate power supply circuit for microcontrollers, so they will remain turned on, but we plan to change this in the future. If you will release the emergency button, the program will continue from the moment it was interrupted. So we recommend to disable raspberry plug-in.
 
-The pouring area of "nalewak" in current camera position is specified in `vertices.txt`. There are listed pixel coordinates of vertices of pouring area in the following order: top-left, top-right, bottom-right, bottom-left. If you will change camera position/pouring area, then you need to take a new photo with cups in the corners of the area, and put them inside `vertices.txt` in order as mentioned earlier.   
+The pouring area of "nalewak" in current camera position is specified in `vertices.txt`. There are listed pixel coordinates of pouring area vertices in the following order: top-left, top-right, bottom-right, bottom-left. If you will change camera position/pouring area, then you need to take a new photo with cups in the corners of the area, and put them inside `vertices.txt` in order as mentioned earlier.   
 
 ## Contents overview ## 
 - **vision_system/** - vision_system module
