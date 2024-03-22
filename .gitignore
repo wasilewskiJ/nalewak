@@ -1,2 +1,6 @@
 *.png
-__pycache__
+*__pycache__*
+network/results/
+__*__*
+*.bak
+*.swp

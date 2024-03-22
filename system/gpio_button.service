@@ -1,0 +1,13 @@
+[Unit]
+Description=Nasłuchiwanie na naciśnięcie przycisku GPIO i odpalenie move_pour
+After=multi-user.target
+
+[Service]
+WorkingDirectory=/home/nalewak/
+Type=simple
+Restart=always
+User=nalewak
+ExecStart=python3 /home/nalewak/gpio_button.py
+
+[Install]
+WantedBy=multi-user.target
