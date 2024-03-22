@@ -3,6 +3,19 @@ import cv2
 
 
 def four_point_transform(image, pts):
+    """
+    Apply a perspective transform to an image given a set of four points. 
+    The function calculates the maximum width and height of the new image to ensure
+    that the entire content is visible in the birds-eye view.
+
+    Args:
+        image (numpy.ndarray): The image to be transformed.
+        pts (numpy.ndarray): Array of four points defining the region to be transformed. 
+                             Points are ordered as top-left, top-right, bottom-right, and bottom-left.
+
+    Returns:
+        tuple: Returns a tuple containing the warped image and the transformation matrix.
+    """
     (tl, tr, br, bl) = pts
 
     # compute the width of the new image, which will be the
