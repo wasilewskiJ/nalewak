@@ -22,7 +22,7 @@ def take_photo(DIR_PATH='./vision_system/', OUTPUT=False, OUTPUT_NAME='img.png')
     ret, frame = cap.read()
 
     if OUTPUT:
-        cv2.imwrite(image_path, frame)
+        cv2.imwrite(OUTPUT_NAME, frame)
     
 
     print("Photo taken")
