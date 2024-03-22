@@ -15,12 +15,28 @@ running = False
 buzzer = Buzzer(17)
 
 def buzzer_on(lenght=0.3,delay=0):
+    """
+    Activates the buzzer for a specified duration after an optional delay.
+
+    Args:
+        length (float): Duration for which the buzzer should remain on (in seconds).
+        delay (float): Delay before the buzzer turns on (in seconds).
+    """
+    
     sleep(delay)
     buzzer.on()
     sleep(lenght)
     buzzer.off()
 
 def button_callback(channel=None):
+    """
+    Callback function that gets executed when the button is pressed. It initiates the move_pour process
+    in a new thread and activates the buzzer.
+
+    Args:
+        channel: Optional. The GPIO channel associated with the button. Not used in this function.
+    """
+
     global running
     if running:
         print("Button was pushed, but already running!")
