@@ -3,9 +3,15 @@ import numpy as np
 
 
 def order_points(pts):
-    """Orders vertices of rectangle. 
-    Takes in list of (X,Y) tuples.
-    Writes result to vertices.txt file.
+    """
+    Orders the vertices of a rectangle given as a list of (X, Y) tuples.
+    The function arranges the vertices in the following order: top-left, top-right, bottom-right, bottom-left.
+    
+    The ordered points are saved to a 'vertices.txt' file in the './plan_view/' directory, formatted
+    specifically for use in other parts of the system, such as 'plan_view.py'.
+
+    Args:
+        pts (list of tuples): List of four (X, Y) tuples representing the vertices of a rectangle.
     """
     pts = np.array(pts, dtype="float32")
 
