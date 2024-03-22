@@ -35,13 +35,43 @@ If you placed cups, you can now push the button. Robot will take photo, scan it 
 If you would like to manually start the robot every time you place the cups, run the command below:
 ```
 python move_pour.py
-```  
+```
+
+### Background service ###
+There is a background systemctl service called **gpio_button.service** configured to run automaticaly on boot on the RPi. It works like `gpio_button.py` but all the time in background.
+Here are some example commands to manage the service:
+
+Restarting the service (for example after changing the code):
+```
+sudo systemctl restart gpio_button
+```
+‌
+Check the status:
+```
+sudo systemctl status gpio_button
+```
+
+Stop the service:
+```
+sudo systemctl stop gpio_button
+```
+
+Run the service:
+```bash
+sudo systemctl start gpio_button
+```
+
+Show logs:
+```bash
+sudo journalctl -u gpio_button --no-pager
+```
 
 Robot must home it's axes every first start. When the robot is idle, it stays in it's max position (579, 544) [mm] - top right corner. If an Arduino shutdown happens - robot will run FIRMWARE_RESTART command in Klipper, then will home and then continue last interrupted process. 
 
 In the current configuration, robot takes image, scans for cups, locate their coordinates and starts moving and pouring. It always goes to closest cup, pour the beverage (actually for 5.5 seconds), then it shakes to remove beverage drops, waits for 2 seconds, and goes to the next closest cup. In this way it handles all the cups and returns to the MAX position.
 
 **If anything goes wrong, there is an emergency button on the top edge of box with power supply** - it will turn off the motors and the pump. Currently, there is a separate power supply circuit for microcontrollers, so they will remain turned on, but we plan to change this in the future. If you will release the emergency button, the program will continue from the moment it was interrupted. So we recommend to disable raspberry plug-in.
+
 
 ## Contents overview ## 
 - **vision_system/** - vision_system module
