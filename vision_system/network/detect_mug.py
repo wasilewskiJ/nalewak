@@ -16,6 +16,27 @@ else:
     from tensorflow.lite.python.interpreter import Interpreter
 
 def detect_objects(image, DIR_PATH='./vision_system/network/', MODEL_NAME='model', GRAPH_NAME='detect.tflite', LABELMAP_NAME='labelmap.txt', OUTPUT=True, OUTPUT_DIR='results', OUTPUT_NAME='img_network_result.png', CENTERS_OUTPUT_PATH='./vision_system/plan_view/centers.pkl', VERTICES_NAME='../plan_view/vertices.txt'):
+    """
+    Detect objects in an image using a TensorFlow Lite model, specifically identifying mugs/cups.
+    Detected objects are highlighted in the image, and their center points are calculated and saved.
+    Optionally, the resulting image can be saved with annotations.
+
+    Args:
+        image (numpy.ndarray): Image in which to detect objects.
+        DIR_PATH (str): Base directory path where the model and related files are stored.
+        MODEL_NAME (str): Name of the model directory.
+        GRAPH_NAME (str): Name of the TensorFlow Lite model file.
+        LABELMAP_NAME (str): Name of the file containing labels.
+        OUTPUT (bool): Whether to save the output image with detected objects highlighted.
+        OUTPUT_DIR (str): Directory to save the output image and detection results.
+        OUTPUT_NAME (str): Filename for the output image.
+        CENTERS_OUTPUT_PATH (str): Path to save the center points of detected mugs/cups.
+        VERTICES_NAME (str): File containing vertices for defining the area of interest.
+
+    The function loads the TensorFlow Lite model and label map, prepares the input image, and performs
+    object detection. Detected mugs/cups are highlighted, and their centers are computed and optionally
+    saved. If OUTPUT is True, the annotated image and detection details are saved in the specified directory.
+    """
     min_conf_threshold = 0.5
     show_results = False  # Change to true if want to show detection results
 
