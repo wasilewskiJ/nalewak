@@ -9,7 +9,17 @@ ROBOT_WIDTH = 579 #mm
 ROBOT_HEIGHT = 544 #mm
 
 def transform_points(pts, M):
-    """Transform points using the transformation matrix M."""
+    """
+    Transform a set of points using a given transformation matrix.
+
+    Args:
+        pts (list of tuples): Points to be transformed.
+        M (numpy.ndarray): The transformation matrix.
+
+    Returns:
+        list: Transformed points.
+    """
+
     transformed_pts = []
     for pt in pts:
         pt_array = np.array([pt[0], pt[1], 1]).reshape(-1, 1)
@@ -20,7 +30,19 @@ def transform_points(pts, M):
 
 
 def adjust_point(pt, max_width, max_height, threshold=55):
-    """Adjust point to be within the image bounds."""
+    """
+    Adjust the point to ensure it's within the bounds of the image.
+
+    Args:
+        pt (tuple): The point to be adjusted.
+        max_width (int): Maximum width of the image.
+        max_height (int): Maximum height of the image.
+        threshold (int): Threshold for adjustment (not used in the function).
+
+    Returns:
+        tuple: Adjusted point.
+    """
+
     x, y = int(pt[0]), int(pt[1])
     if x < 0:
         x = 0
@@ -39,6 +61,21 @@ def plan_view(image, DIR_PATH='./vision_system/plan_view/', CENTERS_NAME='center
     CENTERS_PATH = os.path.join(DIR_PATH, CENTERS_NAME)
     VERTICES_PATH = os.path.join(DIR_PATH, VERTICES_NAME)
     OUTPUT_PATH = os.path.join(DIR_PATH, OUTPUT_NAME)
+    """
+    Transform the perspective of the image to a top-down view and calculate the physical
+    coordinates of detected objects relative to the robot's dimensions.
+
+    Args:
+        image (numpy.ndarray): The image to be transformed.
+        DIR_PATH (str): Directory path for input/output data.
+        CENTERS_NAME (str): Filename for the centers data file.
+        VERTICES_NAME (str): Filename for the vertices data file.
+        OUTPUT (bool): Whether to save the output image.
+        OUTPUT_NAME (str): Filename for the output image.
+
+    Returns:
+        list: Physical points representing the centers of objects in robot's coordinate system.
+    """
 
     with open(VERTICES_PATH) as f:
         pts = eval(f.readline())
