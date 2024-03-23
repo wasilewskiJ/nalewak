@@ -4,9 +4,10 @@
 ## About the project ##
 The project of an autonomous beverage dispenser with a vision system based on Raspberry Pi is a robot that allows for automatic pouring of a specific amount of liquid (e.g. water, juice, etc.) into cups/glasses. It uses Arduino with stepper motors and Klipper3D to control the robot axes. Vision system is based on wide-angle camera with Raspberry Pi. The only other sensors used in the project apart from the camera are the endstops used in the control system.
 
+<h3><a href="https://www.youtube.com/watch?v=lKksrWtldNg&t=7s">Youtube Video with "Nalewak" in action</a></h3>
+
 ![Autonomous beverage dispenser](https://lh3.googleusercontent.com/u/1/drive-viewer/AKGpihY4Ds88guXWTf6SJowu3OumF_aubBPPEXEGs7TINiyMgXItxIrY_UPugz1Nocb0jx5w-EFktZdDalxKAt3sy4ylCh8eCg=w1850-h968)
 
-<link to project page/>
 
 ## Requirements ##
 - Our robot - "nalewak" :)<br>
@@ -74,6 +75,10 @@ In the current configuration, robot takes image, scans for cups, locate their co
 
 The pouring area of "nalewak" in current camera position is specified in `vertices.txt`. There are listed pixel coordinates of pouring area vertices in the following order: top-left, top-right, bottom-right, bottom-left. If you will change camera position/pouring area, then you need to take a new photo with cups in the corners of the area, and put them inside `vertices.txt` in order as mentioned earlier.   
 
+You can connect to RPi via ssh. The WiFi network from the "KN SNS AUTOMATYK" workshop is set up by default. If you connect to it, the RPi's address is 192.168.0.201. If you'd like to add a new WiFi, check out: https://community.octoprint.org/t/wifi-setup-and-troubleshooting/184#heading--edit-WiFi-logon-info
+Or connect the RPi to a monitor and keyboard. You can also configure the hotspot option.
+
+
 ## Contents overview ## 
 - **vision_system/** - vision_system module
   - `vision_system.py` - runs all vision_system submodules
@@ -108,4 +113,33 @@ The pouring area of "nalewak" in current camera position is specified in `vertic
 - 5V 10A relay
 ## Software ##
 - Klipper3D
-- TensorFlow SSD-Mobilenet-V2-FPNlite-320 model 
+- TensorFlow SSD-Mobilenet-V2-FPNlite-320 model
+
+## Circuit Diagram ##
+- In progress
+
+
+## Pictures and screenshots presenting the robot and code results ## 
+<img src="images/robot.jpg" width="400">
+Robot
+
+-------------------------------------------------------------------------------
+<img src="images/neural-network-result.jpg" width="400">
+Results of neural network scan
+
+-------------------------------------------------------------------------------
+<img src="images/robot-head.jpg" width="400">
+Modular Robot Head - Future Development Plan 
+
+-------------------------------------------------------------------------------
+
+## TO-DO LIST: ##
+- Update requirements
+- Make circuit diagram
+- Rework the cabling to reduce the mess.
+- Consolidate everything into a single 230V plug, and install second power supply for raspberry
+- Install better cable terminals at the stepper drivers - we've had to replace them a few times because they weren't making proper contact.
+- You can take more photos with a large number of cups and retrain the network for high quantities of cups - currently, it can handle a maximum of about 10.
+
+## Future development plan ##
+We have a modular end-effector with a gripper - the possibilities are significant. We can teach the robot to play chess, or, for example, connect it with a PlayStation joystick and play some puzzle games like Jenga with it.
