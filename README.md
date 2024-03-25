@@ -11,8 +11,13 @@ The project of an autonomous beverage dispenser with a vision system based on Ra
 
 ## Requirements ##
 - Our robot - "nalewak" :)<br>
-**TODO: Update requirements**
-
+- gpiozero==1.6.2
+- numpy==1.19.5
+- opencv_python==3.4.11.41
+- Requests==2.31.0
+- tensorflow==2.16.1
+- tflite_runtime==2.5.0.post1
+- python==3.9.2
 ## Installation ## 
 - Clone the repository to Raspberry with the following command:
   ```
