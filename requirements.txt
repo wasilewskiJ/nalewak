@@ -1,0 +1,6 @@
+gpiozero==1.6.2
+numpy==1.19.5
+opencv_python==3.4.11.41
+Requests==2.31.0
+tensorflow==2.16.1
+tflite_runtime==2.5.0.post1
