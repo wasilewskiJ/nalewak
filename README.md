@@ -139,7 +139,6 @@ Modular Robot Head - Future Development Plan
 -------------------------------------------------------------------------------
 
 ## TO-DO LIST: ##
-- Update requirements
 - Make circuit diagram
 - Rework the cabling to reduce the mess.
 - Consolidate everything into a single 230V plug, and install second power supply for raspberry
